@@ -19,11 +19,15 @@ class ProductoFactory extends Factory
     public function definition()
     {
         return [
-            /*'categoria_id' => Categoria::factory(),
+            'categoria_id' => Categoria::factory(),
             'producto_nombre' => $this->faker->name(),
             'producto_descripcion' => $this->faker->text($maxNbChars = 30),
             'producto_stock' => $this->faker->numberBetween(1,15),
-            'producto_valor' => $this->faker->numberBetween(1000,50000),*/
+            'producto_valor' => $this->faker->numberBetween(1000,50000),
+            'producto_alto' => $this->faker->numberBetween(1,15),
+            'producto_ancho' => $this->faker->numberBetween(1,15),
+            'producto_profundidad' => $this->faker->numberBetween(1,15),
+            'producto_peso' => $this->faker->numberBetween(1,10),
         ];
     }
 }

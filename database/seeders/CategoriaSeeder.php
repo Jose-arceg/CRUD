@@ -14,12 +14,12 @@ class CategoriaSeeder extends Seeder
      * @return void
      */
     public function run()
-    {/*
+    {
         Categoria::factory()
-        ->count(10)
+        ->count(5)
         ->hasSubcategoria(2)
-        ->hasProducto(3)
+        ->hasProducto(5)
         ->create();
-        */
+ 
     }
 }

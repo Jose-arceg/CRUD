@@ -17,10 +17,10 @@ class SubcategoriaFactory extends Factory
      */
     public function definition()
     {
-        return [/*
+        return [
             'categoria_id' => Categoria::factory(),
             'sc_nombre' => $this->faker->name(),
-            'sc_descripcion' => $this->faker->text($maxNbChars = 30),*/
+            'sc_descripcion' => $this->faker->text($maxNbChars = 30),
         ];
     }
 }

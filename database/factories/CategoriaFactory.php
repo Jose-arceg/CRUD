@@ -16,9 +16,9 @@ class CategoriaFactory extends Factory
      */
     public function definition()
     {
-        return [/*
+        return [
             'categoria_nombre' => $this->faker->word(),
-            'categoria_descripcion' => $this->faker->text($maxNbChars = 30),*/
+            'categoria_descripcion' => $this->faker->text($maxNbChars = 30),
         ];
     }
 }
