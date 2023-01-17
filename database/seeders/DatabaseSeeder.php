@@ -19,8 +19,6 @@ class DatabaseSeeder extends Seeder
             CategoriaSeeder::class,
             RegionSeeder::class,
             ProvinciaSeeder::class,
-
         ]);
-
     }
 }

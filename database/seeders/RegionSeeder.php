@@ -18,69 +18,37 @@ class RegionSeeder extends Seeder
     {
         DB::table('Regions')->insert([
             [
-                'region_nom' => 'Arica y Parinacota',
-                'region_abreviatura' => 'AP',
-                'region_capital' => 'Arica',
+                'region_nom' => 'TARAPACÁ' ,
             ],[
-                'region_nom' => 'Tarapacá' ,
-                'region_abreviatura' => 'TA' ,
-                'region_capital' => 'Iquique',
+                'region_nom' => 'ANTOFAGASTA',
             ],[
-                'region_nom' => 'Antofagasta',
-                'region_abreviatura' => 'AN',
-                'region_capital' => 'Antofagasta',
+                'region_nom' => 'ATACAMA',
             ],[
-                'region_nom' => 'Atacama',
-                'region_abreviatura' => 'AT',
-                'region_capital' => 'Copiapó',
+                'region_nom' => 'COQUIMBO',
             ],[
-                'region_nom' => 'Coquimbo',
-                'region_abreviatura' => 'CO',
-                'region_capital' => 'La Serena',
+                'region_nom' => 'VALPARAISO',
             ],[
-                'region_nom' => 'Valparaiso',
-                'region_abreviatura' => 'VA',
-                'region_capital' => 'valparaíso',
+                'region_nom' => "OHIGGINS",
             ],[
-                'region_nom' => 'Metropolitana de Santiago',
-                'region_abreviatura' => 'RM',
-                'region_capital' => 'Santiago',
+                'region_nom' => 'MAULE',
             ],[
-                'region_nom' => "Libertador General Bernardo O'Higgins",
-                'region_abreviatura' => 'OH',
-                'region_capital' => 'Rancagua',
+                'region_nom' => 'BIOBÍO',
             ],[
-                'region_nom' => 'Maule',
-                'region_abreviatura' => 'MA',
-                'region_capital' => 'Talca',
+                'region_nom' => 'ARAUCANÍA',
             ],[
-                'region_nom' => 'Ñuble',
-                'region_abreviatura' => 'NB',
-                'region_capital' => 'Chillán',
+                'region_nom' => 'LOS LAGOS',
             ],[
-                'region_nom' => 'Biobío',
-                'region_abreviatura' => 'BI',
-                'region_capital' => 'Concepción',
+                'region_nom' => 'AYSEN',
             ],[
-                'region_nom' => 'La Araucanía',
-                'region_abreviatura' => 'IAR',
-                'region_capital' => 'Temuco',
+                'region_nom' => 'MAGALLANES',
             ],[
-                'region_nom' => 'Los Ríos',
-                'region_abreviatura' => 'LR',
-                'region_capital' => 'Valdivia',
+                'region_nom' => 'METROPOLITANA',
             ],[
-                'region_nom' => 'Los Lagos',
-                'region_abreviatura' => 'LL',
-                'region_capital' => 'Puerto Montt',
+                'region_nom' => 'LOS RIOS',
             ],[
-                'region_nom' => 'Aysén del General Carlos Ibáñez del Campo',
-                'region_abreviatura' => 'AI',
-                'region_capital' => 'Coyhaique',
+                'region_nom' => 'ARICA Y PARINACOTA',
             ],[
-                'region_nom' => 'Magallanes y de la Antártica Chilena',
-                'region_abreviatura' => 'MG',
-                'region_capital' => 'Punta Arenas',
+                'region_nom' => 'ÑUBLE',
             ]
             ]);
         

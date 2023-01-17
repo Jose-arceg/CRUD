@@ -15,10 +15,11 @@ return new class extends Migration
     {
         Schema::create('comunas', function (Blueprint $table) {
             $table->increments('id_comuna');
-            $table->string('comuna_nom')->default("No requiere");
-            $table->unsignedInteger('provincia_id');
-            $table->foreign('provincia_id')->references('provincia_id')->on('provincias');
-            $table->string('comuna_abreviatura');
+            $table->string('comuna_nom');
+            $table->unsignedInteger('region_id');
+            $table->foreign('region_id')->references('region_id')->on('regions');
+            $table->string('comuna_abreviatura')->nullable();
+            $table->timestamps();
         });
     }
 

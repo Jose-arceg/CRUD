@@ -16,8 +16,7 @@ return new class extends Migration
         Schema::create('regions', function (Blueprint $table) {
             $table->increments('region_id');
             $table->string('region_nom');
-            $table->string('region_abreviatura');
-            $table->string('region_capital');
+            $table->timestamps();
         });
     }
 

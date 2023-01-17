@@ -41,11 +41,6 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label style="margin-top: 20px" for="Provincia" class="control-label">{{__('Provincia')}}</label>
-                        <select name="Provincia" id="_Provincia" class="form-control" required>
-                        </select>
-                    </div>
-                    <div class="form-group">
                         <label style="margin-top: 20px " for="Comuna" class="control-label">{{__('Comuna')}}</label>
                         <select name="Comuna" id="_Comuna" class="form-control" required>
                         </select>
@@ -62,7 +57,7 @@
             const csrfToken = document.head.querySelector("[name~=csrf-token][content]").content;
 
             document.getElementById('_Region').addEventListener('change', (e) => {
-                fetch('Provincia', {
+                fetch('Comuna', {
                     method: 'POST',
                     body: JSON.stringify({
                         texto: e.target.value
@@ -76,10 +71,10 @@
                 }).then(data => {
                     var opciones = "<option value=''> Elegir</option>"
                     for (let i in data.lista) {
-                        opciones += '<option value ="' + data.lista[i].provincia_id + '">' + data.lista[i]
-                            .provincia_nom + '</option>';
+                        opciones += '<option value ="' + data.lista[i].comuna_abreviatura + '">' + data.lista[i]
+                            .comuna_nom + '</option>';
                     }
-                    document.getElementById("_Provincia").innerHTML = opciones;
+                    document.getElementById("_Comuna").innerHTML = opciones;
                 }).catch(error => console.error(error));
             })
             document.getElementById('_Provincia').addEventListener('change', (e) => {

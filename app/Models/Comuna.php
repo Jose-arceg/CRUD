@@ -7,10 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comuna extends Model
 {
-    public $timestamps = false;
     protected $primaryKey = 'id_comuna';
 
-    public function Provincia(){
-        return $this->belongsTo(Provincia::class,'provincia_id','provincia_id');
+    public function Region(){
+        return $this->belongsTo(Region::class,'region_id','region_id');
     }
 }

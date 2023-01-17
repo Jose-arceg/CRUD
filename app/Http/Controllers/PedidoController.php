@@ -245,7 +245,7 @@ public function Provincia(Request $request){
 }
 public function Comuna(Request $request){
     if(isset($request->texto)){
-        $Comuna = Comuna::where('provincia_id','=', $request->texto)->get();
+        $Comuna = Comuna::where('region_id','=', $request->texto)->get();
             return response()->json(
                 [
                     'lista' => $Comuna,
