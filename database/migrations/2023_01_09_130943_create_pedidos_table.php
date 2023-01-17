@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('pedidos_estado')->default('En preparacion');
             $table->dateTime('pedidos_fecha');
             $table->integer('pedidos_total')->default('0');
+            $table->string('pedidos_sucursal');
         });
     }
 

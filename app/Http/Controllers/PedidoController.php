@@ -28,14 +28,15 @@ class PedidoController extends Controller
     }
 
     public function generarPedido(){
-        $Region = Region::all();
+        $Region = $this->Regionc();
         return view('generarPedido',compact('Region'));    
     }
     
     public function insertarPedido(Request $request){
-            $pedido = Pedido::create($request->except(['_token','Region','Provincia','Comuna']) + ['pedidos_fecha' => Carbon::now()]);
+            $pedido = Pedido::create($request->except(['_token','Region','Comuna']) + ['pedidos_fecha' => Carbon::now()]);
             $pedidoid = $pedido->pedidos_id;
             session(['comuna' => $request->Comuna]);
+            session(['region' => $request->Region]);
             session(['pedidoid' => $pedidoid]);
             session(['cliente' => $pedido->pedidos_cliente]);
             session(['serviceValue' => 0]);
@@ -59,7 +60,7 @@ class PedidoController extends Controller
             } else {
                 $productos = Producto::get();
                 $productost = Producto::onlyTrashed()
-            ->whereHas('detalle_pedido', function($query) {
+                ->whereHas('detalle_pedido', function($query) {
                 $query->where('pedidos_id', session('pedidoid'));
             })->get();
             $productos = $productost->concat($productos);
@@ -226,104 +227,57 @@ public function cotizar($invocador,$Comuna,$producto_valor,$producto_alto,$produ
     
 }
 
-public function Provincia(Request $request){
-    if(isset($request->texto)){
-        $Provincia = Provincia::where('region_id','=', $request->texto)->get();
+public function Comuna(Request $request){
+    if(isset($request->region)){
+        $client = new \GuzzleHttp\Client();
+    $response = $client->request('GET', 'https://testservices.wschilexpress.com/georeference/api/v1.0/coverage-areas?RegionCode='.$request->region.'&type=0', [
+        'headers' => [
+            'Content-Type' => 'application/json',
+            'Cache-Control' => 'no-cache',
+        ]]);
+        $data = json_decode($response->getBody()->getContents());
         return response()->json(
             [
-                'lista' => $Provincia,
+                'lista' => $data,
                 'success' => true
             ]
-            );
-            }else{
-                return response()->json(
-                    [
-                        'success' => false
-                    ]
-                    );
-    }
-}
-public function Comuna(Request $request){
-    if(isset($request->texto)){
-        $Comuna = Comuna::where('region_id','=', $request->texto)->get();
-            return response()->json(
-                [
-                    'lista' => $Comuna,
-                    'success' => true
-                ]
-            );
+        );
     }else{
         return response()->json(
             [
                 'success' => false
             ]
         );
-    }
+    }  
 }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+public function Regionc(){
+    $client = new \GuzzleHttp\Client();
+    $response = $client->request('GET', 'https://testservices.wschilexpress.com/georeference/api/v1.0/regions', [
+        'headers' => [
+            'Content-Type' => 'application/json',
+            'Cache-Control' => 'no-cache',
+        ]
+    ]);
+    $data = json_decode($response->getBody()->getContents());
+    return $data;
+}
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StorePedidoRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StorePedidoRequest $request)
-    {
-        //
-    }
+public function sucursales(Request $request){
+    $client = new \GuzzleHttp\Client();
+    $response = $client->request('GET', 'https://testservices.wschilexpress.com/georeference/api/v1.0/offices?Type=0&RegionCode='.$request->Region.'&CountyName='.$request->Comuna.'' , [
+        'headers' => [
+            'Content-Type' => 'application/json',
+            'Cache-Control' => 'no-cache',
+        ]
+    ]);
+    $data = json_decode($response->getBody()->getContents());
+    return response()->json(
+        [
+            'lista' => $data,
+            'success' => true
+        ]
+    );
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Pedido  $pedido
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Pedido $pedido)
-    {
-        
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Pedido  $pedido
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Pedido $pedido)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdatePedidoRequest  $request
-     * @param  \App\Models\Pedido  $pedido
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdatePedidoRequest $request, Pedido $pedido)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Pedido  $pedido
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Pedido $pedido)
-    {
-        //
-    }
+}
 }

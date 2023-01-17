@@ -35,14 +35,19 @@
                         <label style="margin-top: 20px" for="_Region" class="control-label">{{__('Region')}}</label>
                         <select name="Region" id="_Region" class="form-control" required>
                             <option value="">---Selecciona una Opcion---</option>
-                            @foreach ($Region as $reg)
-                                <option value="{{ $reg->region_id }}">{{ $reg->region_nom }}</option>
+                            @foreach ($Region->regions as $reg)
+                                <option value="{{ $reg->regionId }}">{{ $reg->regionName }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group">
                         <label style="margin-top: 20px " for="Comuna" class="control-label">{{__('Comuna')}}</label>
                         <select name="Comuna" id="_Comuna" class="form-control" required>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label style="margin-top: 20px " for="Sucursal" class="control-label">{{__('Sucursales')}}</label>
+                        <select name="pedidos_sucursal" id="_Sucursal" class="form-control" required>
                         </select>
                     </div>
                     <br>
@@ -60,7 +65,7 @@
                 fetch('Comuna', {
                     method: 'POST',
                     body: JSON.stringify({
-                        texto: e.target.value
+                        region: e.target.value
                     }),
                     headers: {
                         'Content-Type': 'application/json',
@@ -70,37 +75,36 @@
                     return response.json()
                 }).then(data => {
                     var opciones = "<option value=''> Elegir</option>"
-                    for (let i in data.lista) {
-                        opciones += '<option value ="' + data.lista[i].comuna_abreviatura + '">' + data.lista[i]
-                            .comuna_nom + '</option>';
+                    
+                    for (let i in data.lista.coverageAreas) {
+                        opciones += '<option value ="' + data.lista.coverageAreas[i].countyName + '">' + data.lista.coverageAreas[i]
+                            .countyName + '</option>';
                     }
                     document.getElementById("_Comuna").innerHTML = opciones;
                 }).catch(error => console.error(error));
             })
-            document.getElementById('_Provincia').addEventListener('change', (e) => {
-                fetch('Comuna', {
+            document.getElementById('_Comuna').addEventListener('change', (e) => {
+                fetch('sucursales', {
                     method: 'POST',
                     body: JSON.stringify({
-                        texto: e.target.value
+                        Comuna: e.target.value,
+                        Region: document.getElementById('_Region').value 
                     }),
                     headers: {
                         'Content-Type': 'application/json',
                         "X-CSRF-Token": csrfToken
-
                     }
                 }).then(response => {
                     return response.json()
                 }).then(data => {
                     var opciones = "<option value=''> Elegir</option>"
-                    for (let i in data.lista) {
-                        opciones += '<option value ="' + data.lista[i].comuna_abreviatura + '">' + data.lista[i]
-                            .comuna_nom + '</option>';
+                    for (let i in data.lista.offices) {
+                        opciones += '<option value ="' + data.lista.offices[i].officeName +
+                         '">' + data.lista.offices[i].officeName + '</option>';
                     }
-                    document.getElementById("_Comuna").innerHTML = opciones;
-
+                    document.getElementById("_Sucursal").innerHTML = opciones;
                 }).catch(error => console.error(error));
             })
-
             function validarN() {
                 var rut = document.getElementById("Numero").value;
 

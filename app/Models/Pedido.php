@@ -15,7 +15,8 @@ class Pedido extends Model
         'pedidos_direccion',
         'pedidos_numero',
         'pedidos_correo',
-        'pedidos_fecha'
+        'pedidos_fecha',
+        'pedidos_sucursal'
 
     ];
 

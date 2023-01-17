@@ -69,11 +69,11 @@
                                             id="subtotal-{{ $producto->producto_id }}" class="form-control"></span>
                                     </td>
                                     <td>
-                                        <input type="text" name="dt_valor" id="valori-{{ $producto->producto_id }}"
+                                        <input type="hidden" name="dt_valor" id="valori-{{ $producto->producto_id }}"
                                             class="form-control" value="{{ $producto->producto_valor }}">
-                                        <input type="text" name="dt_subtotal"
+                                        <input type="hidden" name="dt_subtotal"
                                             id="subtotali-{{ $producto->producto_id }}">
-                                        <input type="text" name="producto_id" id="producto_id"
+                                        <input type="hidden" name="producto_id" id="producto_id"
                                             value="{{ $producto->producto_id }}">
                                         @if (!$producto->deleted_at)
                                             <button type="submit" class="btn btn-success">{{__('Agregar producto')}}</button>
