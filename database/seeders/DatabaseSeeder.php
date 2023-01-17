@@ -18,7 +18,6 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CategoriaSeeder::class,
             RegionSeeder::class,
-            ProvinciaSeeder::class,
         ]);
     }
 }
