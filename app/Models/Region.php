@@ -12,7 +12,7 @@ class Region extends Model
     protected $primaryKey = 'region_id';
 
     public function Comuna(){
-        return $this->hasmany(Comuna::class,'region_id','region_id');
+        return $this->hasmany(Comuna::class,'region_code','region_code');
     }
 
 }

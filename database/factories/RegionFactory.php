@@ -17,72 +17,87 @@ class RegionFactory extends Factory
     public function definition()
     {
         return [/*
-                    [
-                        'region_nom' => 'Arica y Parinacota',
-                        'region_abreviatura' => 'AP',
-                        'region_capital' => 'Arica',
-                    ],[
-                        'region_nom' => 'Tarapacá' ,
-                        'region_abreviatura' => 'TA' ,
-                        'region_capital' => 'Iquique',
-                    ],[
-                        'region_nom' => 'Antofagasta',
-                        'region_abreviatura' => 'AN',
-                        'region_capital' => 'Antofagasta',
-                    ],[
-                        'region_nom' => 'Atacama',
-                        'region_abreviatura' => 'AT',
-                        'region_capital' => 'Copiapó',
-                    ],[
-                        'region_nom' => 'Coquimbo',
-                        'region_abreviatura' => 'CO',
-                        'region_capital' => 'La Serena',
-                    ],[
-                        'region_nom' => 'Valparaiso',
-                        'region_abreviatura' => 'VA',
-                        'region_capital' => 'valparaíso',
-                    ],[
-                        'region_nom' => 'Metropolitana de Santiago',
-                        'region_abreviatura' => 'RM',
-                        'region_capital' => 'Santiago',
-                    ],[
-                        'region_nom' => "Libertador General Bernardo O'Higgins",
-                        'region_abreviatura' => 'OH',
-                        'region_capital' => 'Rancagua',
-                    ],[
-                        'region_nom' => 'Maule',
-                        'region_abreviatura' => 'MA',
-                        'region_capital' => 'Talca',
-                    ],[
-                        'region_nom' => 'Ñuble',
-                        'region_abreviatura' => 'NB',
-                        'region_capital' => 'Chillán',
-                    ],[
-                        'region_nom' => 'Biobío',
-                        'region_abreviatura' => 'BI',
-                        'region_capital' => 'Concepción',
-                    ],[
-                        'region_nom' => 'La Araucanía',
-                        'region_abreviatura' => 'IAR',
-                        'region_capital' => 'Temuco',
-                    ],[
-                        'region_nom' => 'Los Ríos',
-                        'region_abreviatura' => 'LR',
-                        'region_capital' => 'Valdivia',
-                    ],[
-                        'region_nom' => 'Los Lagos',
-                        'region_abreviatura' => 'LL',
-                        'region_capital' => 'Puerto Montt',
-                    ],[
-                        'region_nom' => 'Aysén del General Carlos Ibáñez del Campo',
-                        'region_abreviatura' => 'AI',
-                        'region_capital' => 'Coyhaique',
-                    ],[
-                        'region_nom' => 'Magallanes y de la Antártica Chilena',
-                        'region_abreviatura' => 'MG',
-                        'region_capital' => 'Punta Arenas',
-                    ]*/
-                ];
+                     [
+            "regionId" => "R1",
+            "regionName" => "TARAPACA",
+            "ineRegionCode" => 1
+        ]
+        [
+            "regionId" => "R2",
+            "regionName" => "ANTOFAGASTA",
+            "ineRegionCode" => 2
+        ],
+        [
+            "regionId" => "R3",
+            "regionName" => "ATACAMA",
+            "ineRegionCode" => 3
+        ],
+        [
+            "regionId" => "R4",
+            "regionName" => "COQUIMBO",
+            "ineRegionCode" => 4
+        ],
+        [
+            "regionId" => "R5",
+            "regionName" => "VALPARAISO",
+            "ineRegionCode" => 5
+        ],
+        [
+            "regionId" => "R6",
+            "regionName" => "LIBERTADOR GRAL BERNARDO O HIGGINS",
+            "ineRegionCode" => 6
+        ],
+        [
+            "regionId" => "R7",
+            "regionName" => "MAULE",
+            "ineRegionCode" => 7
+        ],
+        [
+            "regionId" => "R8",
+            "regionName" => "BIOBIO",
+            "ineRegionCode" => 8
+        ],
+        [
+            "regionId" => "R9",
+            "regionName" => "ARAUCANIA",
+            "ineRegionCode" => 9
+        ],
+        [
+            "regionId" => "RM",
+            "regionName" => "METROPOLITANA DE SANTIAGO",
+            "ineRegionCode" => 13
+        ],
+        [
+            "regionId" => "R10",
+            "regionName" => "LOS LAGOS",
+            "ineRegionCode" => 10
+        ],
+        [
+            "regionId" => "R11",
+            "regionName" => "AISEN DEL GRAL C IBANEZ DEL CAMPO",
+            "ineRegionCode" => 11
+        ],
+        [
+            "regionId" => "R12",
+            "regionName" => "MAGALLANES Y LA ANTARTICA CHILENA",
+            "ineRegionCode" => 12
+        ],
+        {
+            "regionId" => "R14",
+            "regionName" => "LOS RIOS",
+            "ineRegionCode" => 14
+        },
+        [
+            "regionId" => "R15",
+            "regionName" => "ARICA Y PARINACOTA",
+            "ineRegionCode" => 15
+        ],
+        [
+            "regionId" => "R16",
+            "regionName" => "NUBLE",
+            "ineRegionCode" => 16
+        ]
+                */];
 
     }
 }
