@@ -22,19 +22,11 @@ class ProductoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(?Request $request)
+    public function index()
     {
-        if($request && $request->has('producto_nombre')) {
-            $productos = new ProductoCollection(Producto::withTrashed()->where('producto_nombre', 'LIKE', '%' . $request->producto_nombre . '%')->get());
-
-        }else{
-            
-            $productos = new ProductoCollection(Producto::withTrashed()->with('Categoria')->get());
-            
-            }
-        return view('productos.index',compact('productos'));
+        $productos = new ProductoCollection(Producto::withTrashed()->with('Categoria')->get());
+        return view('productos.index')->with('productos', $productos);
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -78,7 +70,7 @@ class ProductoController extends Controller
      */
     public function show(Producto $producto)
     {
-        //
+        return new ProductoResource($producto);
     }
 
     /**

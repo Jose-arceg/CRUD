@@ -43,19 +43,10 @@ class PedidoController extends Controller
             return redirect('agregarProducto');
     }
 
-    public function agregarProducto(?Request $request){
+    public function agregarProducto(){
         if(!session()->has('pedido')){
             return view  ('generarPedido');
         }else{
-            if($request && $request->has('producto_nombre')) {
-                $productos = Producto::where('producto_nombre', 'LIKE', '%' . $request->producto_nombre . '%')->get();
-                $productost = Producto::onlyTrashed()
-            ->where('producto_nombre', 'LIKE', '%' . $request->producto_nombre . '%')
-            ->whereHas('detalle_pedido', function($query) {
-                $query->where('pedidos_id', session('pedidoid'));
-            })->get();
-            $productos = $productost->concat($productos);
-            } else {
                 $productos = Producto::get();
                 $productost = Producto::onlyTrashed()
                 ->whereHas('detalle_pedido', function($query) {
@@ -68,7 +59,6 @@ class PedidoController extends Controller
             $total = $pedido->pedidos_total;
             return view('agregarProducto', compact('productos','total'));
         }
-    }
     public function insertarProducto(Request $request)
 {
     //generar la session con el id del pedido

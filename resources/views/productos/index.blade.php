@@ -5,13 +5,9 @@
     <body>
         <div class="container">
             <div class="buscador">
-                <form action="/productos" class="d-flex" role="search" method="GET">
-                    <input name="producto_nombre" class="form-control search-box" type="search" placeholder=""
-                        aria-label="Search" value="">
-                    <button class="btn btn-success" style="background-color: #82D9D0; border: red;"
-                        type="submit">Buscar</button>
-                </form>
-            </div>
+                <input name="producto_nombre" id="buscador" class="form-control search-box" type="search" placeholder=""
+                    aria-label="Search" value="">
+        </div>
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -38,7 +34,7 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="buscar">
                     @foreach ($productos as $p)
                         <tr>
                             <td>
@@ -115,4 +111,14 @@
             </table>
         </div>
     </body>
+    <script>
+        $(document).ready(function() {
+            $("#buscador").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                    $("#buscar tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+            });
+        });
+    </script>
 @endsection

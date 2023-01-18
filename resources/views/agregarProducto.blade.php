@@ -7,37 +7,36 @@
         <div class="container">
             @if (session()->has('pedido'))
                 <h3>
-                   {{__('Cliente:')}} {{ session()->get('pedido')->pedidos_cliente; }}
+                    {{ __('Cliente:') }} {{ session()->get('pedido')->pedidos_cliente }}
                 </h3>
                 <h4>
-                    {{__('Total: $')}} {{ number_format($total, 0, '', '.') }}
+                    {{ __('Total: $') }} {{ number_format($total, 0, '', '.') }}
                 </h4>
                 @if (session()->has('serviceValue'))
                     <h4>
-                        {{__('Valor aproximado de envio por Chilexpress: $')}}{{ number_format(session('serviceValue'), 0, '', '.') }}
+                        {{ __('Valor aproximado de envio por Chilexpress: $') }}{{ number_format(session('serviceValue'), 0, '', '.') }}
                     </h4>
                 @endif
                 <div class="buscador">
-                    <form action="/agregarProducto" class="d-flex" role="search" method="GET">
-                        <input name="producto_nombre" class="form-control search-box" type="search" placeholder=""
+                        <input name="producto_nombre" id="buscador" class="form-control search-box" type="search" placeholder=""
                             aria-label="Search" value="">
-                        <button class="btn btn-success" style="background-color: #82D9D0; border: red;"
-                            type="submit">{{__('Buscar')}}</button>
-                    </form>
                 </div>
-                <a href="{{ url('/cancelarPedido') }}" style="width: 150px" class="btn btn-danger">{{__('Cancelar pedido')}}</a>
-                <a href="{{ url('/terminarPedido') }}" style="width: 150px" class="btn btn-success">{{__('Terminar pedido')}}</a>
+                <br>
+                <a href="{{ url('/cancelarPedido') }}" style="width: 150px"
+                    class="btn btn-danger">{{ __('Cancelar pedido') }}</a>
+                <a href="{{ url('/terminarPedido') }}" style="width: 150px"
+                    class="btn btn-success">{{ __('Terminar pedido') }}</a>
                 <table class="table table-hover">
                     <thead>
-                        <th>{{__('Producto')}}</th>
-                        <th>{{__('Descripcion')}}</th>
-                        <th>{{__('Valor')}}</th>
-                        <th>{{__('stock')}}</th>
-                        <th>{{__('Cantidad')}}</th>
-                        <th>{{__('subtotal')}}</th>
-                        <th>{{__('Acciones')}}</th>
+                        <th>{{ __('Producto') }}</th>
+                        <th>{{ __('Descripcion') }}</th>
+                        <th>{{ __('Valor') }}</th>
+                        <th>{{ __('stock') }}</th>
+                        <th>{{ __('Cantidad') }}</th>
+                        <th>{{ __('subtotal') }}</th>
+                        <th>{{ __('Acciones') }}</th>
                     </thead>
-                    <tbody>
+                    <tbody id="buscar">
                         @foreach ($productos as $producto)
                             <form action="/insertarProducto">
                                 {{ csrf_field() }}
@@ -76,12 +75,13 @@
                                         <input type="hidden" name="producto_id" id="producto_id"
                                             value="{{ $producto->producto_id }}">
                                         @if (!$producto->deleted_at)
-                                            <button type="submit" class="btn btn-success">{{__('Agregar producto')}}</button>
+                                            <button type="submit"
+                                                class="btn btn-success">{{ __('Agregar producto') }}</button>
                                             <a href="{{ url('/pedidos/' . $producto->producto_id . '/eliminarProducto') }}"
-                                                class="btn btn-danger">{{__('Eliminar producto')}}</a>
+                                                class="btn btn-danger">{{ __('Eliminar producto') }}</a>
                                         @else
                                             <a href="{{ url('/pedidos/' . $producto->producto_id . '/eliminarProducto') }}"
-                                                class="btn btn-danger">{{__('Eliminar producto')}}</a>
+                                                class="btn btn-danger">{{ __('Eliminar producto') }}</a>
                                         @endif
                                     </td>
                                 </tr>
@@ -105,6 +105,14 @@
             document.getElementById('subtotali-' + producto_id).value = subtotal;
             document.getElementById('subtotal-' + producto_id).innerHTML = ("$" + subtotal.toLocaleString('es'));
         }
+        $(document).ready(function() {
+            $("#buscador").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                    $("#buscar tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+            });
+        });
     </script>
 @endsection
 <style>
