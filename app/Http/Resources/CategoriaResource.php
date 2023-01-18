@@ -18,7 +18,7 @@ class CategoriaResource extends JsonResource
             'categoria_id' => $this->categoria_id,
             'categoria_nombre' => $this->categoria_nombre,
             'categoria_descripcion' => $this->categoria_descripcion,
-
         ];
+
     }
 }

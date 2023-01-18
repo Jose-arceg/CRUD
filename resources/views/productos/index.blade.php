@@ -94,7 +94,7 @@
                                                         <label for="Cantidad"
                                                             class="control-label">{{ 'Stock a agregar' }}</label>
                                                         <input type="hidden" name="producto_id"
-                                                            value="{{ $p->producto_id }}">
+                                                            value="{{ $p->productoId }}">
                                                         <input type="number" name="cantidad" id="cantidad">
                                                     </div>
                                                     <div class="modal-footer">

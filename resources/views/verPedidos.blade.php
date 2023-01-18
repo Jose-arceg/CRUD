@@ -28,6 +28,9 @@
                         {{ __('Total') }}
                     </th>
                     <th>
+                        {{ __('Sucursal') }}
+                    </th>
+                    <th>
                         {{ __('Acciones') }}
                     </th>
                 </thead>
@@ -54,6 +57,9 @@
                             </td>
                             <td>
                                 <span>${{ number_format($item->pedidos_total, 0, '', '.') }}</span>
+                            </td>
+                            <td>
+                                <span>{{ $item->pedidos_sucursal }}</span>
                             </td>
                             <td>
                                 <a href="{{ url('/pedidos/' . $item->pedidos_id . '/verPedido') }}"

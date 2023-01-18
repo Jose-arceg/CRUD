@@ -6,7 +6,7 @@
         <div class="container">
 
 
-            @if (session()->has('cliente'))
+            @if (session()->has('pedido'))
                 <h3>{{__('Hay un pedido sin terminar')}}</h3>
             @else
                 <form action="/insertarPedido" method="POST" onsubmit="return validarN()">
@@ -96,11 +96,22 @@
                 }).then(response => {
                     return response.json()
                 }).then(data => {
-                    var opciones = "<option value=''> Elegir</option>"
-                    for (let i in data.lista.offices) {
-                        opciones += '<option value ="' + data.lista.offices[i].officeName +
-                         '">' + data.lista.offices[i].officeName + '</option>';
-                    }
+                    var opciones;
+                    switch(data.lista.statusCode){
+                        case -1:
+                            opciones = "<option value=''>No existe sucursal en esta comuna </option>"
+                            document.getElementById("_Sucursal").disabled = true;
+                        break;
+                        case 0:
+                        document.getElementById("_Sucursal").disabled = false;
+                            opciones = "<option value=''> Elegir</option>"
+                            for (let i in data.lista.offices) {
+                                opciones += '<option value ="' + data.lista.offices[i].officeName +
+                                '">' + data.lista.offices[i].officeName + '</option>';
+                        }
+                        break;
+                    }           
+                        
                     document.getElementById("_Sucursal").innerHTML = opciones;
                 }).catch(error => console.error(error));
             })

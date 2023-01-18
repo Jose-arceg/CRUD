@@ -43,16 +43,12 @@ class LoginController extends Controller
     {
         $this->guard()->logout();
         $request->session()->regenerateToken();
-    
+
         $request->session()->invalidate();
-
-        $request->session()->forget('pedidoid');
-
+        $request->session()->forget('pedido');
         $request->session()->forget('cliente');
-        
         $request->session()->forget('serviceValue');
         $request->session()->forget('productos');
-        $request->session()->forget('comuna');
         return $this->loggedOut($request) ?: redirect('/home');
     }
 }

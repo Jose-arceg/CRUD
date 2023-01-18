@@ -28,7 +28,9 @@ class ProductoController extends Controller
             $productos = new ProductoCollection(Producto::withTrashed()->where('producto_nombre', 'LIKE', '%' . $request->producto_nombre . '%')->get());
 
         }else{
+            
             $productos = new ProductoCollection(Producto::withTrashed()->with('Categoria')->get());
+            
             }
         return view('productos.index',compact('productos'));
     }

@@ -35,19 +35,16 @@ class PedidoController extends Controller
     
     public function insertarPedido(Request $request){
             $pedido = Pedido::create($request->except(['_token','Region','Comuna']) + ['pedidos_fecha' => Carbon::now()]);
-            $pedidoid = $pedido->pedidos_id;
-            session(['comuna' => $request->Comuna]);
-            session(['region' => $request->Region]);
-            session(['pedidoid' => $pedidoid]);
-            session(['cliente' => $pedido->pedidos_cliente]);
+            $pedido->comuna = $request->Comuna;
+            //usar solo una session
+            session()->put('pedido', $pedido);
             session(['serviceValue' => 0]);
             session()->put('productos', [0]);
             return redirect('agregarProducto');
-        
     }
 
     public function agregarProducto(?Request $request){
-        if(!session()->has('pedidoid')){
+        if(!session()->has('pedido')){
             return view  ('generarPedido');
         }else{
             if($request && $request->has('producto_nombre')) {
@@ -66,7 +63,7 @@ class PedidoController extends Controller
             })->get();
             $productos = $productost->concat($productos);
             }
-            $pedido_id = session('pedidoid');
+            $pedido_id = session()->get('pedido')->pedidos_id;
             $pedido = Pedido::FindorFail($pedido_id);
             $total = $pedido->pedidos_total;
             return view('agregarProducto', compact('productos','total'));
@@ -75,7 +72,7 @@ class PedidoController extends Controller
     public function insertarProducto(Request $request)
 {
     //generar la session con el id del pedido
-    $pedidos_id = session('pedidoid');
+    $pedidos_id = session()->get('pedido')->pedidos_id;
     //reducir el stock del producto
     $producto = Producto::FindorFail($request->producto_id);
     $producto->decrement('producto_stock', $request->dt_cantidad);
@@ -109,7 +106,7 @@ class PedidoController extends Controller
     $pedido->save();
     //actualizar valor de envio
     if($count==0){
-        $Comuna = session('comuna');
+        $Comuna = session()->get('pedido')->comuna;
         $invocador="insertar";
         $this->cotizar($invocador,$Comuna,$producto->producto_valor, $producto->producto_alto,$producto->producto_profundidad,$producto->producto_ancho, 
         $producto->producto_peso);
@@ -117,30 +114,24 @@ class PedidoController extends Controller
     }
     return redirect('agregarProducto');
 }
-
 public function cancelarPedido(){
-        $pedidoe = Pedido::where('pedidos_id', session('pedidoid'))->first();
+        $pedidoe = Pedido::where('pedidos_id', session()->get('pedido')->pedidos_id)->first();
         $pedidoe->delete();
-        $detpede = detalle_pedido::where('pedidos_id', session('pedidoid'))->get();
+        $detpede = detalle_pedido::where('pedidos_id', session()->get('pedido')->pedidos_id)->get();
         foreach($detpede as $det){
             $producto = Producto::FindorFail($det->producto_id);
             $producto->increment('producto_stock', $det->dt_cantidad);
             $producto->save();
         }
         $detpede->each->delete();
-        
-        session()->forget('comuna');
-        session()->forget('pedidoid');
-        session()->forget('cliente');
+        session()->forget('pedido');
         session()->forget('serviceValue');
         session()->forget('productos');
         return redirect('home');
 }
 
 public function terminarPedido(){
-    session()->forget('comuna');
-        session()->forget('cliente');
-        session()->forget('pedidoid');
+        session()->forget('pedido');
         session()->forget('serviceValue');
         session()->forget('productos');
         return redirect('home');
@@ -163,7 +154,7 @@ public function verPedido($id){
 
 
 public function eliminarProducto($id){
-        $pedido_id = session('pedidoid');
+        $pedido_id = session()->get('pedido')->pedidos_id;
         $detalle_pedido = detalle_pedido::where('pedidos_id', $pedido_id)
         ->where('producto_id', $id)
         ->first();
@@ -177,7 +168,7 @@ public function eliminarProducto($id){
             $stockn = $stocka + $detalle_pedido->dt_cantidad;
             $producto->producto_stock = $stockn;
             $invocador="eliminar";
-            $Comuna = session('comuna');
+            $Comuna = session()->get('pedido')->comuna;
             $this->cotizar($invocador,$Comuna,$producto->producto_valor, $producto->producto_alto,$producto->producto_profundidad,$producto->producto_ancho, 
             $producto->producto_peso);
             $producto->save();
@@ -227,43 +218,7 @@ public function cotizar($invocador,$Comuna,$producto_valor,$producto_alto,$produ
     }
     
 }
-/*
-public function Comuna(Request $request){
-    if(isset($request->region)){
-        $client = new \GuzzleHttp\Client();
-    $response = $client->request('GET', 'https://testservices.wschilexpress.com/georeference/api/v1.0/coverage-areas?RegionCode='.$request->region.'&type=0', [
-        'headers' => [
-            'Content-Type' => 'application/json',
-            'Cache-Control' => 'no-cache',
-        ]]);
-        $data = json_decode($response->getBody()->getContents());
-        return response()->json(
-            [
-                'lista' => $data,
-                'success' => true
-            ]
-        );
-    }else{
-        return response()->json(
-            [
-                'success' => false
-            ]
-        );
-    }  
-}*/
-/*
-public function Regionc(){
-    $client = new \GuzzleHttp\Client();
-    $response = $client->request('GET', 'https://testservices.wschilexpress.com/georeference/api/v1.0/regions', [
-        'headers' => [
-            'Content-Type' => 'application/json',
-            'Cache-Control' => 'no-cache',
-        ]
-    ]);
-    $data = json_decode($response->getBody()->getContents());
-    return $data;
-}
-*/
+
 public function sucursales(Request $request){
     $client = new \GuzzleHttp\Client();
     $response = $client->request('GET', 'https://testservices.wschilexpress.com/georeference/api/v1.0/offices?Type=0&RegionCode='.$request->Region.'&CountyName='.$request->Comuna.'' , [
@@ -282,7 +237,7 @@ public function sucursales(Request $request){
 }
 public function Comuna(Request $request){
     if(isset($request->region)){
-        $data = Comuna::where('region_code',"=" ,$request->region)->get();
+        $data = Comuna::where('region_code',$request->region)->get();
         return response()->json(
             [
                 'lista' => $data,

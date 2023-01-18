@@ -14,6 +14,7 @@
                         <th>{{__('Estado')}}</th>
                         <th>{{__('Fecha')}}</th>
                         <th>{{__('Total')}}</th>
+                        <th>{{__('Sucursal')}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,6 +26,7 @@
                         <td>{{ $pedidos->pedidos_estado }}</td>
                         <td>{{ $pedidos->pedidos_fecha }}</td>
                         <td>{{ $pedidos->pedidos_total }}</td>
+                        <td>{{ $pedidos->pedidos_sucursal }}</td>
                     </tr>
                 </tbody>
             </table>

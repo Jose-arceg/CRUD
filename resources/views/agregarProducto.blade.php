@@ -5,9 +5,9 @@
     <body>
 
         <div class="container">
-            @if (session()->has('cliente'))
+            @if (session()->has('pedido'))
                 <h3>
-                   {{__('Cliente:')}} {{ session('cliente') }}
+                   {{__('Cliente:')}} {{ session()->get('pedido')->pedidos_cliente; }}
                 </h3>
                 <h4>
                     {{__('Total: $')}} {{ number_format($total, 0, '', '.') }}
@@ -92,8 +92,6 @@
             @else
                 <h3>No se ha generado ningun pedido</h3>
             @endif
-
-
         </div>
     </body>
     <script>
