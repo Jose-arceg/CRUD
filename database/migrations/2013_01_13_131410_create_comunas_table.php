@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('comuna_nom');
             $table->unsignedInteger('region_id');
             $table->foreign('region_id')->references('region_id')->on('regions');
+            $table->string('region_code');
             $table->timestamps();
         });
     }

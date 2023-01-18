@@ -28,7 +28,8 @@ class PedidoController extends Controller
     }
 
     public function generarPedido(){
-        $Region = $this->Regionc();
+        //$Region = $this->Regionc();
+        $Region = Region::all();
         return view('generarPedido',compact('Region'));    
     }
     
@@ -226,7 +227,7 @@ public function cotizar($invocador,$Comuna,$producto_valor,$producto_alto,$produ
     }
     
 }
-
+/*
 public function Comuna(Request $request){
     if(isset($request->region)){
         $client = new \GuzzleHttp\Client();
@@ -249,8 +250,8 @@ public function Comuna(Request $request){
             ]
         );
     }  
-}
-
+}*/
+/*
 public function Regionc(){
     $client = new \GuzzleHttp\Client();
     $response = $client->request('GET', 'https://testservices.wschilexpress.com/georeference/api/v1.0/regions', [
@@ -262,7 +263,7 @@ public function Regionc(){
     $data = json_decode($response->getBody()->getContents());
     return $data;
 }
-
+*/
 public function sucursales(Request $request){
     $client = new \GuzzleHttp\Client();
     $response = $client->request('GET', 'https://testservices.wschilexpress.com/georeference/api/v1.0/offices?Type=0&RegionCode='.$request->Region.'&CountyName='.$request->Comuna.'' , [
@@ -278,6 +279,22 @@ public function sucursales(Request $request){
             'success' => true
         ]
     );
-
+}
+public function Comuna(Request $request){
+    if(isset($request->region)){
+        $data = Comuna::where('region_code',"=" ,$request->region)->get();
+        return response()->json(
+            [
+                'lista' => $data,
+                'success' => true
+            ]
+        );
+    }else{
+        return response()->json(
+            [
+                'success' => false
+            ]
+        );
+    }  
 }
 }

@@ -35,8 +35,8 @@
                         <label style="margin-top: 20px" for="_Region" class="control-label">{{__('Region')}}</label>
                         <select name="Region" id="_Region" class="form-control" required>
                             <option value="">---Selecciona una Opcion---</option>
-                            @foreach ($Region->regions as $reg)
-                                <option value="{{ $reg->regionId }}">{{ $reg->regionName }}</option>
+                            @foreach ($Region as $reg)
+                                <option value="{{ $reg->region_code }}">{{ $reg->region_nom }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -76,9 +76,8 @@
                 }).then(data => {
                     var opciones = "<option value=''> Elegir</option>"
                     
-                    for (let i in data.lista.coverageAreas) {
-                        opciones += '<option value ="' + data.lista.coverageAreas[i].countyName + '">' + data.lista.coverageAreas[i]
-                            .countyName + '</option>';
+                    for (let i in data.lista) {
+                        opciones += '<option value ="' + data.lista[i].comuna_nom + '">' + data.lista[i].comuna_nom + '</option>';
                     }
                     document.getElementById("_Comuna").innerHTML = opciones;
                 }).catch(error => console.error(error));
