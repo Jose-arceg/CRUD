@@ -24,12 +24,16 @@ class StoreCategoriaRequest extends FormRequest
     public function rules()
     {
         return [
-            'categoria_nombre' => ['required'],
-            'categoria_descripcion' => ['required'],
+            'categoria_nombre' => ['required','string'],
+            'categoria_descripcion' => ['required','string'],
         ];
     }
-    public function prepareForValidation(){
-        //
+    public function messages()
+    {
+        return [
+            'categoria_nombre.required' => 'El nombre de la categoria es requerido',
+            'categoria_descripcion.required'  => 'La descripcioin de la categoria es requerida',
+        ];
     }
 
 

@@ -47,7 +47,7 @@ class ProductoController extends Controller
      */
     public function store(StoreProductoRequest $request)
     {
-        $producto = $request->except('_token');
+        $producto = $request->validated();
         Producto::create($producto);
         return redirect('productos');
     }

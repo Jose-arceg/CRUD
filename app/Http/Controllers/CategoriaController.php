@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreCategoriaRequest;
 use App\Http\Resources\CategoriaResource;
 use App\Http\Resources\CategoriaCollection;
+use Illuminate\Foundation\Http\FormRequest;
 
 class CategoriaController extends Controller
 {
@@ -42,7 +43,7 @@ class CategoriaController extends Controller
      */
     public function store(StoreCategoriaRequest $request)
     {
-        $categoria = $request->except('_token');
+        $categoria = $request->validated();
         Categoria::create($categoria);
         return redirect('categorias');
     }

@@ -7,7 +7,7 @@
             <div class="buscador">
                 <input name="producto_nombre" id="buscador" class="form-control search-box" type="search" placeholder=""
                     aria-label="Search" value="">
-        </div>
+            </div>
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -55,13 +55,13 @@
                             <td>
                                 @if (!$p->deleted_at)
                                     <form method="POST" action="{{ url(route('productos.destroy', $p->producto_id)) }}">
-                                        {{ csrf_field() }}
+                                        @csrf
                                         {{ method_field('DELETE') }}
                                         <input type="submit" class="btn btn-danger" value="Eliminar producto">
                                     </form>
                                 @else
                                     <form method="POST" action="{{ url(route('productos.restore', $p->producto_id)) }}">
-                                        {{ csrf_field() }}
+                                        @csrf
                                         {{ method_field('PUT') }}
                                         <input type="submit" class="btn btn-success" value="Restaurar producto">
                                     </form>
@@ -71,7 +71,7 @@
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#Modal{{ $p->producto_id }}">
-                                    Agregar stock
+                                    {{ __('Agregar stock')}}
                                 </button>
                                 <!-- Modal -->
                                 <div class="modal fade" id="Modal{{ $p->producto_id }}" tabindex="-1"
@@ -79,7 +79,7 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="ModalLabel">Agregar stock</h1>
+                                                <h1 class="modal-title fs-5" id="ModalLabel">{{ __('Agregar stock')}}</h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
@@ -88,16 +88,15 @@
                                                     @csrf
                                                     <div class="form-group">
                                                         <label for="Cantidad"
-                                                            class="control-label">{{ 'Stock a agregar' }}</label>
+                                                            class="control-label">{{ __('Stock a agregar') }}</label>
                                                         <input type="hidden" name="producto_id"
                                                             value="{{ $p->productoId }}">
                                                         <input type="number" name="cantidad" id="cantidad">
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">Cerrar</button>
-                                                        <button type="submit" class="btn btn-success">Argegar
-                                                            stock</button>
+                                                            data-bs-dismiss="modal">{{__('Cerrar')}}</button>
+                                                        <button type="submit" class="btn btn-success">{{ __('Agregar stock')}}</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -115,9 +114,9 @@
         $(document).ready(function() {
             $("#buscador").on("keyup", function() {
                 var value = $(this).val().toLowerCase();
-                    $("#buscar tr").filter(function() {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
+                $("#buscar tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
             });
         });
     </script>
