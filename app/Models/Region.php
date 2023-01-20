@@ -11,9 +11,9 @@ class Region extends Model
     use HasFactory;
     protected $primaryKey = 'region_id';
 
-    public function Comuna(){
-        return $this->hasmany(Comuna::class,'region_code','region_code');
+    public function Comuna()
+    {
+        return $this->hasmany(Comuna::class, 'region_code', 'region_code');
     }
 
 }
-

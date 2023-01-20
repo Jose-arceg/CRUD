@@ -16,6 +16,12 @@ class Subcategoria extends Model
     protected $primaryKey ='sc_id';
     protected $dates = ['deleted_at'];
 
+    protected $fillable = [
+        'categoria_id',
+        'sc_nombre',
+        'sc_descripcion',
+    ];
+
     public function Categoria(){
         return $this->belongsTo(Categoria::class,'categoria_id','categoria_id');
     }

@@ -50,17 +50,17 @@
                                 ${{ number_format($p->producto_valor, 0, '', '.') }}
                             </td>
                             <td>
-                                {{ $p->categoria->categoria_nombre }}
+                                {{ $p->categoria_nombre }}
                             </td>
                             <td>
                                 @if (!$p->deleted_at)
-                                    <form method="POST" action="{{ url(route('productos.destroy', $p->producto_id)) }}">
+                                    <form method="POST" action="{{ route('productos.destroy', $p->producto_id) }}">
                                         @csrf
                                         {{ method_field('DELETE') }}
                                         <input type="submit" class="btn btn-danger" value="Eliminar producto">
                                     </form>
                                 @else
-                                    <form method="POST" action="{{ url(route('productos.restore', $p->producto_id)) }}">
+                                    <form method="POST" action="{{ route('productos.restore', $p->producto_id) }}">
                                         @csrf
                                         {{ method_field('PUT') }}
                                         <input type="submit" class="btn btn-success" value="Restaurar producto">
@@ -71,7 +71,7 @@
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#Modal{{ $p->producto_id }}">
-                                    {{ __('Agregar stock')}}
+                                    {{ __('Agregar stock') }}
                                 </button>
                                 <!-- Modal -->
                                 <div class="modal fade" id="Modal{{ $p->producto_id }}" tabindex="-1"
@@ -79,7 +79,7 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="ModalLabel">{{ __('Agregar stock')}}</h1>
+                                                <h1 class="modal-title fs-5" id="ModalLabel">{{ __('Agregar stock') }}</h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
@@ -90,13 +90,14 @@
                                                         <label for="Cantidad"
                                                             class="control-label">{{ __('Stock a agregar') }}</label>
                                                         <input type="hidden" name="producto_id"
-                                                            value="{{ $p->productoId }}">
+                                                            value="{{ $p->producto_id }}">
                                                         <input type="number" name="cantidad" id="cantidad">
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">{{__('Cerrar')}}</button>
-                                                        <button type="submit" class="btn btn-success">{{ __('Agregar stock')}}</button>
+                                                            data-bs-dismiss="modal">{{ __('Cerrar') }}</button>
+                                                        <button type="submit"
+                                                            class="btn btn-success">{{ __('Agregar stock') }}</button>
                                                     </div>
                                                 </form>
                                             </div>

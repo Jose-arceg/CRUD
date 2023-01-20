@@ -2,7 +2,7 @@
 @section('content')
     <div class="container">
         <form action="{{ url('/productos') }}" method="post">
-            {{ csrf_field() }}
+            @csrf
             <div class="form-group">
                 <label for="producto_nombre" class="control-label">Nombre</label>
                 <input type="text" class="form-control @error('producto_nombre') is-invalid @enderror"

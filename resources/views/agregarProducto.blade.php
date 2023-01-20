@@ -38,8 +38,8 @@
                     </thead>
                     <tbody id="buscar">
                         @foreach ($productos as $producto)
-                            <form action="/insertarProducto">
-                                {{ csrf_field() }}
+                            <form action="{{route('insertarProducto')}}">
+                                @csrf
                                 <tr>
                                     <td>
                                         <span name="nombre" id="nombre"

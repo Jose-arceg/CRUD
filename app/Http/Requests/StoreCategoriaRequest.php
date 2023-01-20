@@ -16,25 +16,19 @@ class StoreCategoriaRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
     public function rules()
     {
         return [
-            'categoria_nombre' => ['required','string'],
-            'categoria_descripcion' => ['required','string'],
+            'categoria_nombre' => ['required', 'string'],
+            'categoria_descripcion' => ['required', 'string'],
         ];
     }
     public function messages()
     {
         return [
             'categoria_nombre.required' => 'El nombre de la categoria es requerido',
-            'categoria_descripcion.required'  => 'La descripcioin de la categoria es requerida',
+            'categoria_descripcion.required' => 'La descripcioin de la categoria es requerida',
         ];
     }
-
 
 }

@@ -24,9 +24,19 @@ class StoreSubCategoriaRequest extends FormRequest
     public function rules()
     {
         return [
-            'categoria_id' => ['required'],
-            'sc_nombre' => ['required'],
-            'sc_descripcion' => ['required'],
+            'categoria_id' => ['required', 'integer'],
+            'sc_nombre' => ['required', 'string'],
+            'sc_descripcion' => ['required', 'string'],
+        ];
+
+    }
+    public function messages()
+    {
+        return [
+            'sc_nombre.required' => 'El nombre de la Sub categoria es requerido',
+            'sc_descripcion.required' => 'La descripcioin de la Sub categoria es requerida',
+            'categoria_id.required' => 'Es necesario seleccionar una categoria',
+            'categoria_id.integer' => 'El valor de la categoria debe ser un numero entero',
         ];
     }
 }

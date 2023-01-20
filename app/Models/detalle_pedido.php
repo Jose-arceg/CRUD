@@ -9,7 +9,7 @@ class detalle_pedido extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $primaryKey ='dt_id';
+    protected $primaryKey = 'dt_id';
     protected $fillable = [
         'pedidos_id',
         'producto_id',
@@ -18,13 +18,14 @@ class detalle_pedido extends Model
         'dt_subtotal',
     ];
 
-    public function Pedido(){
-        return $this->belongsTo(Pedido::class,'pedidos_id','pedidos_id');
+    public function Pedido()
+    {
+        return $this->belongsTo(Pedido::class, 'pedidos_id', 'pedidos_id');
     }
 
     public function productos()
     {
-        return $this->belongsTo(Producto::class,'producto_id','producto_id');
+        return $this->belongsTo(Producto::class, 'producto_id', 'producto_id');
     }
 
 }

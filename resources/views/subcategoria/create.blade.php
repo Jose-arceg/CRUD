@@ -2,7 +2,7 @@
 @section('content')
     <div class="container">
         <form action="{{ url('/subcategoria') }}" method="post">
-            {{ csrf_field() }}
+            @csrf
             <div class="form-group">
                 <label for="sc_nombre" class="control-label">{{__('Nombre')}}</label>
                 <input type="text" class="form-control" name="sc_nombre" id="sc_nombre" value="">

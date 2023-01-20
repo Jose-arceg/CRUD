@@ -2,49 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Producto;
-use App\Models\Categoria;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Contracts\Session\Session;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreProductoRequest;
-use App\Http\Resources\ProductoResource;
-use App\Http\Resources\ProductoCollection;
-use App\Http\Resources\CategoriaResource;
-use App\Http\Resources\CategoriaCollection;
-
+use App\Models\Categoria;
+use App\Models\Producto;
+use Illuminate\Http\Request;
 
 class ProductoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        $productos = new ProductoCollection(Producto::withTrashed()->with('Categoria')->get());
+        $productos = Producto::withTrashed()->select(
+            'producto_id',
+            'producto_nombre',
+            'producto_descripcion',
+            'producto_stock',
+            'producto_valor',
+            'productos.deleted_at',
+            'categorias.categoria_nombre'
+        )
+            ->leftJoin('categorias', 'productos.categoria_id', '=', 'categorias.categoria_id')
+            ->get();
         return view('productos.index')->with('productos', $productos);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        $categorias = new CategoriaCollection(Categoria::all());
-        return view ('productos.create', compact('categorias'));
+        $categorias = Categoria::select('categoria_id', 'categoria_nombre')->get();
+        return view('productos.create', compact('categorias'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreProductoRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreProductoRequest $request)
     {
         $producto = $request->validated();
@@ -52,59 +39,35 @@ class ProductoController extends Controller
         return redirect('productos');
     }
 
-    public function actualizarstock(Request $request){
-        $producto = Producto::withTrashed()->where('producto_id','=',$request->producto_id)
-        ->first();
-        if($producto->producto_stock==0){
+    public function actualizarstock(Request $request)
+    {
+        $producto = Producto::withTrashed()->where('producto_id', '=', $request->producto_id)->first();
+        if ($producto->producto_stock == 0) {
             $producto->restore();
         }
         $producto->increment('producto_stock', $request->cantidad);
         $producto->save();
         return redirect('productos');
     }
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Producto  $producto
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Producto $producto)
     {
-        return new ProductoResource($producto);
+        //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Producto  $producto
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Producto $producto)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateProductoRequest  $request
-     * @param  \App\Models\Producto  $producto
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateProductoRequest $request, Producto $producto)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Producto  $producto
-     * @return \Illuminate\Http\Response
-     */
     public function restore($id)
     {
-        $producto = Producto::withTrashed()->findOrFail($id);
+        $producto = Producto::withTrashed()->where('producto_id', $id)->first();
         $producto->restore();
         return redirect('productos');
     }
