@@ -4,6 +4,7 @@
 
     <body>
         <div class="container">
+            @include('mensajes.subcategorias')
             <table class="table table-hover">
                 <thead>
                     <tr>

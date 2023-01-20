@@ -32,7 +32,7 @@ class CategoriaController extends Controller
     {
         $categoria = $request->validated();
         Categoria::create($categoria);
-        return redirect('categorias');
+        return redirect('categorias')->withSuccess("Categoria agregada con exito");
     }
 
     public function show(Categoria $categoria)

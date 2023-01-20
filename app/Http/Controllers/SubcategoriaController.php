@@ -23,7 +23,7 @@ class SubcategoriaController extends Controller
     public function store(StoreSubCategoriaRequest $request)
     {
         Subcategoria::create($request->validated());
-        return redirect('subcategoria');
+        return redirect('subcategoria')->withSuccess("Subcategaria agregada con exito");
     }
 
     public function show(Subcategoria $subcategoria)

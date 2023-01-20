@@ -3,6 +3,7 @@
 @section('content')
 <body>
     <div class="container">
+        @include('mensajes.categorias')
         <table class="table table-hover">
             <thead>
                 <tr>

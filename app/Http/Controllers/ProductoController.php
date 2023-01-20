@@ -36,7 +36,7 @@ class ProductoController extends Controller
     {
         $producto = $request->validated();
         Producto::create($producto);
-        return redirect('productos');
+        return redirect('productos')->withSuccess("Producto guardado");
     }
 
     public function actualizarstock(Request $request)
@@ -69,11 +69,11 @@ class ProductoController extends Controller
     {
         $producto = Producto::withTrashed()->where('producto_id', $id)->first();
         $producto->restore();
-        return redirect('productos');
+        return redirect('productos')->withRestored("Producto restaurado con exito");
     }
     public function destroy(Producto $producto)
     {
         $producto->delete();
-        return redirect('productos');
+        return redirect('productos')->withDeleted("Producto Deshabilitado con exito");
     }
 }

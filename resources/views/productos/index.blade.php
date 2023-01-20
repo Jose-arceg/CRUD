@@ -4,6 +4,7 @@
 
     <body>
         <div class="container">
+            @include('mensajes.productos')
             <div class="buscador">
                 <input name="producto_nombre" id="buscador" class="form-control search-box" type="search" placeholder=""
                     aria-label="Search" value="">
