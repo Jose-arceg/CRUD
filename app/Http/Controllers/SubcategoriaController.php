@@ -17,7 +17,7 @@ class SubcategoriaController extends Controller
     public function create()
     {
         $categorias = Categoria::all();
-        return view('subcategoria.create', compact('categorias'));
+        return view('subcategoria.create')->with('categorias', $categorias);
     }
 
     public function store(StoreSubCategoriaRequest $request)

@@ -12,11 +12,7 @@ use Illuminate\Http\Request;
 
 class PedidoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
     }
@@ -25,7 +21,7 @@ class PedidoController extends Controller
     {
         //$Region = $this->Regionc();
         $Region = Region::all();
-        return view('generarPedido', compact('Region'));
+        return view('generarPedido')->with('Region', $Region);
     }
 
     public function insertarPedido(Request $request)
@@ -53,7 +49,7 @@ class PedidoController extends Controller
         $pedido_id = session()->get('pedido')->pedidos_id;
         $pedido = Pedido::FindorFail($pedido_id);
         $total = $pedido->pedidos_total;
-        return view('agregarProducto', compact('productos', 'total'));
+        return view('agregarProducto')->with('productos', $productos)->with('total', $total);
     }
     public function insertarProducto(Request $request)
     {
@@ -119,7 +115,7 @@ class PedidoController extends Controller
         session()->forget('pedido');
         session()->forget('serviceValue');
         session()->forget('productos');
-        return redirect('home');
+        return view('home');
     }
 
     public function terminarPedido()
@@ -127,7 +123,7 @@ class PedidoController extends Controller
         session()->forget('pedido');
         session()->forget('serviceValue');
         session()->forget('productos');
-        return redirect('home');
+        return view('home');
     }
 
     public function verPedidos()

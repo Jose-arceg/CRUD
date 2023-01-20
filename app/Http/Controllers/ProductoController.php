@@ -29,7 +29,7 @@ class ProductoController extends Controller
     public function create()
     {
         $categorias = Categoria::select('categoria_id', 'categoria_nombre')->get();
-        return view('productos.create', compact('categorias'));
+        return view('productos.create')->with('categorias', $categorias);
     }
 
     public function store(StoreProductoRequest $request)
