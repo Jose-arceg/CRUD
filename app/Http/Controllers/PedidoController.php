@@ -19,7 +19,6 @@ class PedidoController extends Controller
 
     public function generarPedido()
     {
-        //$Region = $this->Regionc();
         $Region = Region::all();
         return view('generarPedido')->with('Region', $Region);
     }
@@ -195,15 +194,15 @@ class PedidoController extends Controller
             ],
         ]);
         $data = json_decode($response->getBody()->getContents());
-        $precio=0;
-        foreach($data->data->courierServiceOptions as $d){
-            if($d->serviceTypeCode==3){
-                if($d->additionalServices){
-                    foreach ($d->additionalServices as $ad){
+        $precio = 0;
+        foreach ($data->data->courierServiceOptions as $d) {
+            if ($d->serviceTypeCode == 3) {
+                if ($d->additionalServices) {
+                    foreach ($d->additionalServices as $ad) {
                         $precio = $precio + $ad->serviceValue;
                     }
                 }
-                $precio = ($precio+$d->serviceValue);
+                $precio = ($precio + $d->serviceValue);
             }
         }
         if ($invocador == "insertar") {
@@ -211,7 +210,6 @@ class PedidoController extends Controller
         } elseif ($invocador == "eliminar") {
             session()->decrement('serviceValue', $precio);
         }
-
     }
 
     public function sucursales(Request $request)
