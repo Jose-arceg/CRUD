@@ -194,12 +194,17 @@ class PedidoController extends Controller
                 "deliveryTime" => 2,
             ],
         ]);
-
         $data = json_decode($response->getBody()->getContents());
-        if ($data->data->courierServiceOptions[0]->additionalServices) {
-            $precio = $data->data->courierServiceOptions[0]->additionalServices[0]->serviceValue + $data->data->courierServiceOptions[0]->serviceValue;
-        } else {
-            $precio = $data->data->courierServiceOptions[0]->serviceValue;
+        $precio=0;
+        foreach($data->data->courierServiceOptions as $d){
+            if($d->serviceTypeCode==3){
+                if($d->additionalServices){
+                    foreach ($d->additionalServices as $ad){
+                        $precio = $precio + $ad->serviceValue;
+                    }
+                }
+                $precio = ($precio+$d->serviceValue);
+            }
         }
         if ($invocador == "insertar") {
             session()->increment('serviceValue', $precio);
